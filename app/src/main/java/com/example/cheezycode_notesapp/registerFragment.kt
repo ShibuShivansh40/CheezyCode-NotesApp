@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.cheezycode_notesapp.databinding.FragmentRegisterBinding
+import com.example.cheezycode_notesapp.models.UserLogin
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.utils.NetworkResult
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,40 +35,41 @@ class registerFragment : Fragment() {
         binding.btnLoginText.setOnClickListener{
             //This is done to check that we are able to call the viewModel using Fragment
             //This is to check if the correct user is logging in the app, but right now, it's not working. Check it when the server is up.
-            authViewModel.loginUser(UserRequest("shivanshsethns_cse21@gmail.com", "111111", "test0011"))
+            authViewModel.loginUser(UserLogin("hello_cse21@gmail.com", "test0011")) // validation Error : Name is not allowed
             //findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 
         binding.btnSignUp.setOnClickListener{
             //This is done to check that we are able to call the viewModel using Fragment
             // This is to check if the correct user is logging in the app, but right now, it's not working. Check it when the server is up.
-            authViewModel.registerUser(UserRequest("shivanshsethns_cse21@gmail.com", "111111", "test0011"))
+            authViewModel.registerUser(UserRequest("Shivansh Seth","hello_cse21@gmail.com", "test0011"))
+            //Console Log has been updated.
             //findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
         }
         return binding.root
         //Here we are returning to the view of the Register Fragment
     }
 
-     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-         super.onViewCreated(view, savedInstanceState)
-         authViewModel.userResponseLiveData.observe(viewLifecycleOwner, Observer{
-             binding.progressBar.isVisible = false
-             when (it){
-                 is NetworkResult.Success -> {
-                     //Here we also need to add the Token
-                     findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
-                 }
-                 is NetworkResult.Error -> {
-                     binding.txtError.text = it.message
-                 }
-                 is NetworkResult.Loading -> {
-                     binding.progressBar.isVisible=true
-                 }
-             }
-         })
-         // Here we are assigning everything a task through the conditions
-
-     }
+//     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//         super.onViewCreated(view, savedInstanceState)
+//         authViewModel.userResponseLiveData.observe(viewLifecycleOwner, Observer{
+//             binding.progressBar.isVisible = false
+//             when (it){
+//                 is NetworkResult.Success -> {
+//                     //Here we also need to add the Token
+//                     findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
+//                 }
+//                 is NetworkResult.Error -> {
+//                     binding.txtError.text = it.message
+//                 }
+//                 is NetworkResult.Loading -> {
+//                     binding.progressBar.isVisible=true
+//                 }
+//             }
+//         })
+//         // Here we are assigning everything a task through the conditions
+//
+//     }
 
     override fun onDestroyView() {
         super.onDestroyView()

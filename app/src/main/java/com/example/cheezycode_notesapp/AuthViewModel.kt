@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.cheezycode_notesapp.models.User
+import com.example.cheezycode_notesapp.models.UserLogin
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.models.UserResponse
 import com.example.cheezycode_notesapp.repository.UserRepository
@@ -28,9 +29,9 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
         }
     }
     //Here we have launched our Coroutine and called the function from userRepository that is loginrUser
-    fun loginUser(userRequest: UserRequest){
+    fun loginUser(userLogin: UserLogin){
         viewModelScope.launch {
-            userRepository.loginUser(userRequest)
+            userRepository.loginUser(userLogin)
         }
     }
 

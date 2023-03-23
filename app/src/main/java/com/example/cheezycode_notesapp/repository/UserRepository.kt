@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.cheezycode_notesapp.api.UserAPI
+import com.example.cheezycode_notesapp.models.UserLogin
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.models.UserResponse
 import com.example.cheezycode_notesapp.utils.Constants.TAG
@@ -44,8 +45,8 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     }
 
-    suspend fun loginUser(userRequest: UserRequest){
-        val response = userAPI.signup(userRequest)
+    suspend fun loginUser(userLogin: UserLogin){
+        val response = userAPI.signin(userLogin)
         Log.d(TAG , response.body().toString())
     }
 }
