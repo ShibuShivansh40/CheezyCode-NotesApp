@@ -1,4 +1,4 @@
-#NTOE TAKING APP - CHEEZYCODE
+*#NOTE TAKING APP - CHEEZYCODE
 
 Developing an Android App using Kotlin from CheezyCode
 
