@@ -35,7 +35,8 @@ class registerFragment : Fragment() {
         binding.btnLoginText.setOnClickListener{
             //This is done to check that we are able to call the viewModel using Fragment
             //This is to check if the correct user is logging in the app, but right now, it's not working. Check it when the server is up.
-            authViewModel.loginUser(UserLogin("hello_cse21@gmail.com", "test0011")) // validation Error : Name is not allowed
+//            authViewModel.loginUser(UserLogin("hello_cse21@gmail.com", "test0011")) // validation Error : Name is not allowed
+            authViewModel.loginUser(UserLogin("_DEFAULT","hello_cse21@gmail.com", "test0011")) // validation Error : Name is not allowed
             //findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
 

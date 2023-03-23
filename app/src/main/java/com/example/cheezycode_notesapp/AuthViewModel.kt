@@ -34,6 +34,11 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
             userRepository.loginUser(userLogin)
         }
     }
+//    fun loginUser(userRequest: UserRequest){
+//        viewModelScope.launch {
+//            userRepository.loginUser(userRequest)
+//        }
+//    }
 
 
 }
