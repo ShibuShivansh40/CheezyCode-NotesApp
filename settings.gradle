@@ -1,0 +1,18 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        // we added this and the SpinKit worked.
+        maven { url 'https://jitpack.io' }
+    }
+}
+rootProject.name = "CheezyCode-NotesApp"
+include ':app'
