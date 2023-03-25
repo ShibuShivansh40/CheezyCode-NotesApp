@@ -10,6 +10,8 @@ import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.models.UserResponse
 import com.example.cheezycode_notesapp.utils.Constants.TAG
 import com.example.cheezycode_notesapp.utils.NetworkResult
+import org.json.JSONObject
+import retrofit2.Response
 import javax.inject.Inject
 
 //This is the Repository Class
@@ -32,21 +34,27 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         //Log.d(TAG , response.body().toString()) To check if my app is working fine
 
         //To check if response is an error or a genuine response.
+        handleResponse(response)
 
-        if(response.isSuccessful && response.body() != null){
+    }
+    suspend fun loginUser(userRequest: UserRequest){
+        val response = userAPI.signin(userRequest)
+        handleResponse(response)
+    }
+
+    private fun handleResponse(response: Response<UserResponse>) {
+        if (response.isSuccessful && response.body() != null) {
             _userResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
-        }
-        else if (response.errorBody()!=null){
-            _userResponseLiveData.postValue(NetworkResult.Error("SOMETHING WENT WRONG!"))
-        }
-        else{
+        } else if (response.errorBody() != null) {
+//            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())
+    //            Here we're parsing the JSON with Array
+                _userResponseLiveData.postValue(NetworkResult.Error("SOMETHING WENT WRONG!"))
+//            This tells us that we're unable to read the Error Message , so we will be commenting this line of up
+//            _userResponseLiveData.postValue(NetworkResult.Error(errorObj.getString("message")))
+//            Right now, it is creating an error : -     org.json.JSONException: Value Tunnel of type java.lang.String cannot be converted to JSONObject
+        } else {
             _userResponseLiveData.postValue(NetworkResult.Error("Something went Wrong!"))
         }
-
     }
 
-    suspend fun loginUser(userLogin: UserLogin){
-        val response = userAPI.signin(userLogin)
-        Log.d(TAG , response.body().toString())
-    }
 }

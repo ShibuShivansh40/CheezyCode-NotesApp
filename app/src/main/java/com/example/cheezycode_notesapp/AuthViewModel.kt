@@ -29,9 +29,9 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
         }
     }
     //Here we have launched our Coroutine and called the function from userRepository that is loginrUser
-    fun loginUser(userLogin: UserLogin){
+    fun loginUser(userRequest: UserRequest){
         viewModelScope.launch {
-            userRepository.loginUser(userLogin)
+            userRepository.loginUser(userRequest)
         }
     }
 //    fun loginUser(userRequest: UserRequest){
