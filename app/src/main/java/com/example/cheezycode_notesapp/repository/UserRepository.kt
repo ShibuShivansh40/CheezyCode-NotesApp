@@ -1,16 +1,12 @@
 package com.example.cheezycode_notesapp.repository
 
-import android.net.Network
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.cheezycode_notesapp.api.UserAPI
 import com.example.cheezycode_notesapp.models.UserLogin
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.models.UserResponse
-import com.example.cheezycode_notesapp.utils.Constants.TAG
 import com.example.cheezycode_notesapp.utils.NetworkResult
-import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -24,7 +20,6 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
     get() = _userResponseLiveData
     // Data can be accessed from here
 
-
     suspend fun registerUser(userRequest: UserRequest){
         // Here we have implemented the Loading State
         _userResponseLiveData.postValue(NetworkResult.Loading())
@@ -37,8 +32,9 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
         handleResponse(response)
 
     }
-    suspend fun loginUser(userRequest: UserRequest){
-        val response = userAPI.signin(userRequest)
+    suspend fun loginUser(userLogin: UserLogin){
+        _userResponseLiveData.postValue(NetworkResult.Loading())
+        val response = userAPI.signin(userLogin)
         handleResponse(response)
     }
 

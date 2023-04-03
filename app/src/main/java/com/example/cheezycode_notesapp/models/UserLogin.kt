@@ -1,7 +1,6 @@
 package com.example.cheezycode_notesapp.models
 
-data class UserRequest(
+data class UserLogin (
     val email : String,
-    val name : String,
     val password : String
-)
+    )

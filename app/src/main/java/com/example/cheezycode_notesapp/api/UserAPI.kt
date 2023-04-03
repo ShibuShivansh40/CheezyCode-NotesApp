@@ -11,7 +11,7 @@ interface UserAPI {
 
     //@POST("/users/signin") //Just used to check if the ap[p is working or not
     @POST("/login/")
-    suspend fun signin(@Body UserRequest: UserRequest) : Response<UserResponse>
+    suspend fun signin(@Body UserLogin: UserLogin) : Response<UserResponse>
 
     //@POST("/users/signup") //Just used to check if the ap[p is working or not
     @POST("/userRegister/")
