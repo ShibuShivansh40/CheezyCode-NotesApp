@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -14,13 +15,19 @@ import com.example.cheezycode_notesapp.databinding.FragmentRegisterBinding
 import com.example.cheezycode_notesapp.models.UserLogin
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.utils.NetworkResult
+import com.example.cheezycode_notesapp.utils.TokenManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
     private var _binding : FragmentLoginBinding? = null
     private val binding get() = _binding!! // This is used to NullSafe the Binding Object.
     private val authViewModel by viewModels<AuthViewModel>() // Object for ViewModel using Kotlin extensions
+
+    @Inject
+    lateinit var tokenManager: TokenManager
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,9 +65,10 @@ class LoginFragment : Fragment() {
     private fun bindObservers() {
         authViewModel.userResponseLiveData.observe(viewLifecycleOwner, Observer{
             binding.progressBar.isVisible = false
-            when (it){
+            when(it){
                 is NetworkResult.Success -> {
-                    //Here we also need to add the Token
+//                    Toast.makeText(context, it.toString(), Toast.LENGTH_LONG)
+                    tokenManager.saveToken(it.data!!.token) // Here it saves the token into the local storage
                     findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
                 }
                 is NetworkResult.Error -> {

@@ -14,8 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.cheezycode_notesapp.databinding.FragmentRegisterBinding
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.utils.NetworkResult
+import com.example.cheezycode_notesapp.utils.TokenManager
 import dagger.hilt.android.AndroidEntryPoint
 import java.net.PasswordAuthentication
+import javax.inject.Inject
 
 @AndroidEntryPoint // Here we have defined our android entry point
 class registerFragment : Fragment() {
@@ -24,12 +26,19 @@ class registerFragment : Fragment() {
     private val binding get() = _binding!! // This is used to NullSafe the Binding Object.
     private val authViewModel by viewModels<AuthViewModel>() // Object for ViewModel using Kotlin extensions
 
+    @Inject
+    lateinit var tokenManager: TokenManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View?{
         _binding = FragmentRegisterBinding.inflate(inflater, container, false)
 //        //Now here we can access all our views through this null safe variable
+        if(tokenManager.getToken() !=null){//Here we have checked that we have a token or not. If we have a token then we will navigate to the MainFragment
+            findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
+        }
+
         return binding.root
         //Here we are returning to the view of the Register Fragment
     }
@@ -38,7 +47,7 @@ class registerFragment : Fragment() {
          super.onViewCreated(view, savedInstanceState)
 
          binding.btnLoginText.setOnClickListener{
-             Toast.makeText(context, "Unable to Open the Login Page" , Toast.LENGTH_LONG).show()
+//             Toast.makeText(context, "Unable to Open the Login Page" , Toast.LENGTH_LONG).show()
              it.findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
          }
 
@@ -69,7 +78,7 @@ class registerFragment : Fragment() {
              binding.progressBar.isVisible = false
              when (it){
                  is NetworkResult.Success -> {
-                     //Here we also need to add the Token
+                     tokenManager.saveToken(it.data!!.token)//It basically saves the token into the local storage
                      findNavController().navigate(R.id.action_registerFragment_to_mainFragment)
                  }
                  is NetworkResult.Error -> {

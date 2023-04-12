@@ -1,5 +1,6 @@
 package com.example.cheezycode_notesapp.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.cheezycode_notesapp.api.UserAPI
@@ -7,6 +8,7 @@ import com.example.cheezycode_notesapp.models.UserLogin
 import com.example.cheezycode_notesapp.models.UserRequest
 import com.example.cheezycode_notesapp.models.UserResponse
 import com.example.cheezycode_notesapp.utils.NetworkResult
+import org.json.JSONObject
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -40,6 +42,7 @@ class UserRepository @Inject constructor(private val userAPI: UserAPI) {
 
     private fun handleResponse(response: Response<UserResponse>) {
         if (response.isSuccessful && response.body() != null) {
+            Log.e("RESPONSE_CODE" , response.body().toString())
             _userResponseLiveData.postValue(NetworkResult.Success(response.body()!!))
         } else if (response.errorBody() != null) {
 //            val errorObj = JSONObject(response.errorBody()!!.charStream().readText())

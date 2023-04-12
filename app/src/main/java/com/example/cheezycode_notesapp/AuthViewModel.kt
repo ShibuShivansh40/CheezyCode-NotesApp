@@ -47,7 +47,6 @@ class AuthViewModel @Inject constructor(private val userRepository: UserReposito
            result = Pair(false, "Password length should be greater than 8")
         }
         return result
-
     }
 
 }
